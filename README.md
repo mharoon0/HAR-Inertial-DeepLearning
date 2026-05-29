@@ -55,4 +55,19 @@ The project evaluates two architectural paradigms:
 <img width="1188" height="790" alt="PCA_Analysis" src="https://github.com/user-attachments/assets/871747d4-af50-4037-b785-f4ad5caffb9b" />
 
 * **Observation:** PCA projection onto a 2D space reveals distinct, linearly separable clusters for dynamic/gait-related activities, while revealing highly complex structural overlaps between static positions (Sitting vs. Standing).
----
+
+### Model Error Profile Breakdown (Confusion Matrices)
+The confusion matrices highlight exactly where the model classifications excel and where structural misinterpretations occur on the independent 30% test set splits.
+
+#### 1. Multi-Layer Perceptron (MLP) — Final Test Accuracy: 94.7%
+<img width="1500" height="1200" alt="MLP_Confusion_Matrix_Test" src="https://github.com/user-attachments/assets/2604a208-2b0c-442a-89a2-57bdef355629" />
+
+  * ***Static Strengths:*** Effectively isolated the boundaries for static postures, containing only ***77 total misclassifications*** between Sitting and Standing. This demonstrates that explicitly isolated gravity vector inputs provide strong orientation anchors.
+  * ***Dynamic Bottlenecks:*** Underperformed slightly on highly rhythmic gait modifications, accurately mapping ***431 samples*** for *Walking Upstairs*.
+
+
+#### 2. 1D-Convolutional Neural Network (1D-CNN) — Final Test Accuracy: 93.1%
+<img width="1500" height="1200" alt="CNN_Confusion_Matrix_Test" src="https://github.com/user-attachments/assets/67b524bf-a659-493f-bf5d-256cc3dd800f" />
+
+  * ***Static Vulnerabilities:*** Struggled heavily to identify absolute spatial positions from scratch, yielding a total of **176 errors** between Sitting and Standing. This highlights that localized temporal filters cannot naturally substitute orientation invariants without a much longer tracking window.
+  * ***Dynamic Mastery:*** Outperformed the MLP on complex continuous movements, correctly predicting **464 samples**
